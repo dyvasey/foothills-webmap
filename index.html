@@ -1,0 +1,616 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet-measure.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet-svg-shape-markers.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-measure.js"></script>
+        <script src="data/ParkBoundaries_3.js"></script>
+        <script src="data/traverse_routes_6.js"></script>
+        <script src="data/sierra_dz_7.js"></script>
+        <script src="data/alt_traverse_8.js"></script>
+        <script src="data/VSF_Samples_9.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[38.42596947616401,-121.61103895895997],[39.47717322631121,-120.0986749429436]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var measureControl = new L.Control.Measure({
+            position: 'topleft',
+            primaryLengthUnit: 'meters',
+            secondaryLengthUnit: 'kilometers',
+            primaryAreaUnit: 'sqmeters',
+            secondaryAreaUnit: 'hectares'
+        });
+        measureControl.addTo(map);
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .innerHTML = '';
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .className += ' fas fa-ruler';
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_GoogleHybrid_0');
+        map.getPane('pane_GoogleHybrid_0').style.zIndex = 400;
+        var layer_GoogleHybrid_0 = L.tileLayer('https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {
+            pane: 'pane_GoogleHybrid_0',
+            opacity: 0.505,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 18
+        });
+        layer_GoogleHybrid_0;
+        map.addLayer(layer_GoogleHybrid_0);
+        map.createPane('pane_Chico92_FHClip_1');
+        map.getPane('pane_Chico92_FHClip_1').style.zIndex = 401;
+        var img_Chico92_FHClip_1 = 'data/Chico92_FHClip_1.png';
+        var img_bounds_Chico92_FHClip_1 = [[38.98353372514273,-121.33787713573037],[39.739191203893185,-120.26564222522802]];
+        var layer_Chico92_FHClip_1 = new L.imageOverlay(img_Chico92_FHClip_1,
+                                              img_bounds_Chico92_FHClip_1,
+                                              {pane: 'pane_Chico92_FHClip_1'});
+        bounds_group.addLayer(layer_Chico92_FHClip_1);
+        map.addLayer(layer_Chico92_FHClip_1);
+        map.createPane('pane_Sac81_PlacervilleClip_2');
+        map.getPane('pane_Sac81_PlacervilleClip_2').style.zIndex = 402;
+        var img_Sac81_PlacervilleClip_2 = 'data/Sac81_PlacervilleClip_2.png';
+        var img_bounds_Sac81_PlacervilleClip_2 = [[38.555068407513495,-121.32262579583062],[39.017489788802656,-120.44586513504917]];
+        var layer_Sac81_PlacervilleClip_2 = new L.imageOverlay(img_Sac81_PlacervilleClip_2,
+                                              img_bounds_Sac81_PlacervilleClip_2,
+                                              {pane: 'pane_Sac81_PlacervilleClip_2'});
+        bounds_group.addLayer(layer_Sac81_PlacervilleClip_2);
+        map.addLayer(layer_Sac81_PlacervilleClip_2);
+        function pop_ParkBoundaries_3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FID'] !== null ? autolinker.link(feature.properties['FID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['GISACRES'] !== null ? autolinker.link(feature.properties['GISACRES'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['UNITNAME'] !== null ? autolinker.link(feature.properties['UNITNAME'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['GISID'] !== null ? autolinker.link(feature.properties['GISID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SUBTYPE'] !== null ? autolinker.link(feature.properties['SUBTYPE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['UNITNBR'] !== null ? autolinker.link(feature.properties['UNITNBR'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SHARE'] !== null ? autolinker.link(feature.properties['SHARE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Shape_Leng'] !== null ? autolinker.link(feature.properties['Shape_Leng'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['GlobalID'] !== null ? autolinker.link(feature.properties['GlobalID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SHAPE_Le_1'] !== null ? autolinker.link(feature.properties['SHAPE_Le_1'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SHAPE_Area'] !== null ? autolinker.link(feature.properties['SHAPE_Area'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_ParkBoundaries_3_0() {
+            return {
+                pane: 'pane_ParkBoundaries_3',
+                opacity: 1,
+                color: 'rgba(128,14,16,0.522)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(231,164,235,0.522)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_ParkBoundaries_3');
+        map.getPane('pane_ParkBoundaries_3').style.zIndex = 403;
+        map.getPane('pane_ParkBoundaries_3').style['mix-blend-mode'] = 'normal';
+        var layer_ParkBoundaries_3 = new L.geoJson(json_ParkBoundaries_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_ParkBoundaries_3',
+            layerName: 'layer_ParkBoundaries_3',
+            pane: 'pane_ParkBoundaries_3',
+            onEachFeature: pop_ParkBoundaries_3,
+            style: style_ParkBoundaries_3_0,
+        });
+        bounds_group.addLayer(layer_ParkBoundaries_3);
+        map.addLayer(layer_ParkBoundaries_3);
+        map.createPane('pane_SF_MariposaClip_4');
+        map.getPane('pane_SF_MariposaClip_4').style.zIndex = 404;
+        var img_SF_MariposaClip_4 = 'data/SF_MariposaClip_4.png';
+        var img_bounds_SF_MariposaClip_4 = [[37.30665804005826,-120.66307141836961],[38.007300826727466,-119.98765934487696]];
+        var layer_SF_MariposaClip_4 = new L.imageOverlay(img_SF_MariposaClip_4,
+                                              img_bounds_SF_MariposaClip_4,
+                                              {pane: 'pane_SF_MariposaClip_4'});
+        bounds_group.addLayer(layer_SF_MariposaClip_4);
+        map.addLayer(layer_SF_MariposaClip_4);
+        map.createPane('pane_Mariposa_WesternClip_5');
+        map.getPane('pane_Mariposa_WesternClip_5').style.zIndex = 405;
+        var img_Mariposa_WesternClip_5 = 'data/Mariposa_WesternClip_5.png';
+        var img_bounds_Mariposa_WesternClip_5 = [[36.99913165978561,-119.99949085287479],[38.00886941326001,-119.56961725790963]];
+        var layer_Mariposa_WesternClip_5 = new L.imageOverlay(img_Mariposa_WesternClip_5,
+                                              img_bounds_Mariposa_WesternClip_5,
+                                              {pane: 'pane_Mariposa_WesternClip_5'});
+        bounds_group.addLayer(layer_Mariposa_WesternClip_5);
+        map.addLayer(layer_Mariposa_WesternClip_5);
+        function pop_traverse_routes_6(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['path_type'] !== null ? autolinker.link(feature.properties['path_type'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['name'] !== null ? autolinker.link(feature.properties['name'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['unit'] !== null ? autolinker.link(feature.properties['unit'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_traverse_routes_6_0(feature) {
+            switch(String(feature.properties['path_type'])) {
+                case 'road':
+                    return {
+                pane: 'pane_traverse_routes_6',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 2.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'trail':
+                    return {
+                pane: 'pane_traverse_routes_6',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'round',
+                lineJoin: 'round',
+                weight: 2.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                default:
+                    return {
+                pane: 'pane_traverse_routes_6',
+                opacity: 1,
+                color: 'rgba(235,223,113,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_traverse_routes_6');
+        map.getPane('pane_traverse_routes_6').style.zIndex = 406;
+        map.getPane('pane_traverse_routes_6').style['mix-blend-mode'] = 'normal';
+        var layer_traverse_routes_6 = new L.geoJson(json_traverse_routes_6, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_traverse_routes_6',
+            layerName: 'layer_traverse_routes_6',
+            pane: 'pane_traverse_routes_6',
+            onEachFeature: pop_traverse_routes_6,
+            style: style_traverse_routes_6_0,
+        });
+        bounds_group.addLayer(layer_traverse_routes_6);
+        map.addLayer(layer_traverse_routes_6);
+        function pop_sierra_dz_7(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['name'] !== null ? autolinker.link(feature.properties['name'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>reported_a</strong><br />' + (feature.properties['reported_a'] !== null ? autolinker.link(feature.properties['reported_a'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['kde_path'] !== null ? '<img src="images/' + String(feature.properties['kde_path']).replace(/[\\\/:]/g, '_').trim() + '">' : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['source'] !== null ? autolinker.link(feature.properties['source'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_sierra_dz_7_0(feature) {
+            switch(String(feature.properties['source'])) {
+                case 'Attia17':
+                    return {
+                pane: 'pane_sierra_dz_7',
+                shape: 'square',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(74,221,77,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Attia21':
+                    return {
+                pane: 'pane_sierra_dz_7',
+                shape: 'square',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(35,32,224,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Moclock13':
+                    return {
+                pane: 'pane_sierra_dz_7',
+                shape: 'square',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(128,225,226,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Powerman20':
+                    return {
+                pane: 'pane_sierra_dz_7',
+                shape: 'square',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(222,49,43,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Snow08':
+                    return {
+                pane: 'pane_sierra_dz_7',
+                shape: 'square',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(237,116,235,1.0)',
+                interactive: true,
+            }
+                    break;
+                default:
+                    return {
+                pane: 'pane_sierra_dz_7',
+                shape: 'square',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(211,214,21,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_sierra_dz_7');
+        map.getPane('pane_sierra_dz_7').style.zIndex = 407;
+        map.getPane('pane_sierra_dz_7').style['mix-blend-mode'] = 'normal';
+        var layer_sierra_dz_7 = new L.geoJson(json_sierra_dz_7, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_sierra_dz_7',
+            layerName: 'layer_sierra_dz_7',
+            pane: 'pane_sierra_dz_7',
+            onEachFeature: pop_sierra_dz_7,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.shapeMarker(latlng, style_sierra_dz_7_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_sierra_dz_7);
+        map.addLayer(layer_sierra_dz_7);
+        function pop_alt_traverse_8(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['type'] !== null ? autolinker.link(feature.properties['type'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['name'] !== null ? autolinker.link(feature.properties['name'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_alt_traverse_8_0(feature) {
+            switch(String(feature.properties['type'])) {
+                default:
+                    return {
+                pane: 'pane_alt_traverse_8',
+                opacity: 1,
+                color: 'rgba(166,234,124,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 2.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'river':
+                    return {
+                pane: 'pane_alt_traverse_8',
+                opacity: 1,
+                color: 'rgba(140,221,233,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 2.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'road':
+                    return {
+                pane: 'pane_alt_traverse_8',
+                opacity: 1,
+                color: 'rgba(227,26,28,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 2.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_alt_traverse_8');
+        map.getPane('pane_alt_traverse_8').style.zIndex = 408;
+        map.getPane('pane_alt_traverse_8').style['mix-blend-mode'] = 'normal';
+        var layer_alt_traverse_8 = new L.geoJson(json_alt_traverse_8, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_alt_traverse_8',
+            layerName: 'layer_alt_traverse_8',
+            pane: 'pane_alt_traverse_8',
+            onEachFeature: pop_alt_traverse_8,
+            style: style_alt_traverse_8_0,
+        });
+        bounds_group.addLayer(layer_alt_traverse_8);
+        map.addLayer(layer_alt_traverse_8);
+        function pop_VSF_Samples_9(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Sample'] !== null ? autolinker.link(feature.properties['Sample'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Latitude'] !== null ? autolinker.link(feature.properties['Latitude'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Longitude'] !== null ? autolinker.link(feature.properties['Longitude'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Elevation'] !== null ? autolinker.link(feature.properties['Elevation'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Accuracy'] !== null ? autolinker.link(feature.properties['Accuracy'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Field Lithology'] !== null ? autolinker.link(feature.properties['Field Lithology'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CGS Unit'] !== null ? autolinker.link(feature.properties['CGS Unit'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Billet'] !== null ? autolinker.link(feature.properties['Billet'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_VSF_Samples_9_0(feature) {
+            switch(String(feature.properties['Billet'])) {
+                default:
+                    return {
+                pane: 'pane_VSF_Samples_9',
+                radius: 6.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(6,6,2,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'x':
+                    return {
+                pane: 'pane_VSF_Samples_9',
+                radius: 6.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(250,250,29,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_VSF_Samples_9');
+        map.getPane('pane_VSF_Samples_9').style.zIndex = 409;
+        map.getPane('pane_VSF_Samples_9').style['mix-blend-mode'] = 'normal';
+        var layer_VSF_Samples_9 = new L.geoJson(json_VSF_Samples_9, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_VSF_Samples_9',
+            layerName: 'layer_VSF_Samples_9',
+            pane: 'pane_VSF_Samples_9',
+            onEachFeature: pop_VSF_Samples_9,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_VSF_Samples_9_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_VSF_Samples_9);
+        map.addLayer(layer_VSF_Samples_9);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'VSF_Samples<br /><table><tr><td style="text-align: center;"><img src="legend/VSF_Samples_9_0.png" /></td><td></td></tr><tr><td style="text-align: center;"><img src="legend/VSF_Samples_9_ThinSection1.png" /></td><td>Thin Section</td></tr></table>': layer_VSF_Samples_9,'alt_traverse<br /><table><tr><td style="text-align: center;"><img src="legend/alt_traverse_8_0.png" /></td><td></td></tr><tr><td style="text-align: center;"><img src="legend/alt_traverse_8_river1.png" /></td><td>river</td></tr><tr><td style="text-align: center;"><img src="legend/alt_traverse_8_road2.png" /></td><td>road</td></tr></table>': layer_alt_traverse_8,'sierra_dz<br /><table><tr><td style="text-align: center;"><img src="legend/sierra_dz_7_Attia170.png" /></td><td>Attia17</td></tr><tr><td style="text-align: center;"><img src="legend/sierra_dz_7_Attia211.png" /></td><td>Attia21</td></tr><tr><td style="text-align: center;"><img src="legend/sierra_dz_7_Moclock132.png" /></td><td>Moclock13</td></tr><tr><td style="text-align: center;"><img src="legend/sierra_dz_7_Powerman203.png" /></td><td>Powerman20</td></tr><tr><td style="text-align: center;"><img src="legend/sierra_dz_7_Snow084.png" /></td><td>Snow08</td></tr><tr><td style="text-align: center;"><img src="legend/sierra_dz_7_5.png" /></td><td></td></tr></table>': layer_sierra_dz_7,'traverse_routes<br /><table><tr><td style="text-align: center;"><img src="legend/traverse_routes_6_road0.png" /></td><td>road</td></tr><tr><td style="text-align: center;"><img src="legend/traverse_routes_6_trail1.png" /></td><td>trail</td></tr><tr><td style="text-align: center;"><img src="legend/traverse_routes_6_2.png" /></td><td></td></tr></table>': layer_traverse_routes_6,"Mariposa_WesternClip": layer_Mariposa_WesternClip_5,"SF_MariposaClip": layer_SF_MariposaClip_4,'<img src="legend/ParkBoundaries_3.png" /> ParkBoundaries': layer_ParkBoundaries_3,"Sac81_PlacervilleClip": layer_Sac81_PlacervilleClip_2,"Chico92_FHClip": layer_Chico92_FHClip_1,"Google Hybrid": layer_GoogleHybrid_0,},{collapsed:false}).addTo(map);
+        setBounds();
+        var i = 0;
+        layer_traverse_routes_6.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['name'] !== null?String('<div style="color: #000000; font-size: 6pt; font-family: \'MS Shell Dlg 2\', sans-serif;">' + layer.feature.properties['name']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_traverse_routes_6'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        var i = 0;
+        layer_alt_traverse_8.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['name'] !== null?String('<div style="color: #000000; font-size: 12pt; font-family: \'MS Shell Dlg 2\', sans-serif;">' + layer.feature.properties['name']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_alt_traverse_8'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        var i = 0;
+        layer_VSF_Samples_9.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['Sample'] !== null?String('<div style="color: #000000; font-size: 10pt; font-family: \'MS Shell Dlg 2\', sans-serif;">' + layer.feature.properties['Sample']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_VSF_Samples_9'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        L.ImageOverlay.include({
+            getBounds: function () {
+                return this._bounds;
+            }
+        });
+        resetLabels([layer_traverse_routes_6,layer_sierra_dz_7,layer_alt_traverse_8,layer_VSF_Samples_9]);
+        map.on("zoomend", function(){
+            resetLabels([layer_traverse_routes_6,layer_sierra_dz_7,layer_alt_traverse_8,layer_VSF_Samples_9]);
+        });
+        map.on("layeradd", function(){
+            resetLabels([layer_traverse_routes_6,layer_sierra_dz_7,layer_alt_traverse_8,layer_VSF_Samples_9]);
+        });
+        map.on("layerremove", function(){
+            resetLabels([layer_traverse_routes_6,layer_sierra_dz_7,layer_alt_traverse_8,layer_VSF_Samples_9]);
+        });
+        </script>
+    </body>
+</html>
